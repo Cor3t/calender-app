@@ -153,7 +153,12 @@ class _CreateInfoState extends State<CreateInfo> {
           children: [
             Row(
               children: [
-                Icon(Icons.cancel),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.close_rounded),
+                ),
                 Spacer(),
                 TextButton(
                   style: TextButton.styleFrom(

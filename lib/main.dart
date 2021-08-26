@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skeme/config/app_config.dart';
 import 'package:skeme/config/template.dart';
 import 'package:skeme/screens/calender.dart';
+import 'package:skeme/screens/show_info.dart';
 
 void main() {
   runApp(MyApp());

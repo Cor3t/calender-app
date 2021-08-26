@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skeme/config/app_config.dart';
 import 'package:skeme/config/data.dart';
 import 'package:skeme/screens/create_form.dart';
+import 'package:skeme/screens/show_info.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:skeme/config/template.dart';
@@ -210,41 +211,56 @@ Widget straightView(
                   itemBuilder: (context, index) {
                     var info = events(_calendarProvider.selectedDay);
                     return events(_calendarProvider.selectedDay) != null
-                        ? Container(
-                            margin:
-                                EdgeInsets.only(left: 20, right: 10, top: 20),
-                            child: Row(
-                              children: [
-                                RichText(
-                                    text: TextSpan(
-                                        text: "${info[index].beginTime}\n",
-                                        style: TextStyle(color: Colors.black),
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return InfoView(
+                                  title: info[index].title,
+                                  description: info[index].description,
+                                  beginTime: info[index].beginTime,
+                                  endTime: info[index].endTime,
+                                );
+                              }));
+                            },
+                            child: Container(
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 10, top: 20),
+                                child: Row(
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(
+                                            text: "${info[index].beginTime}\n",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                            children: [
+                                          TextSpan(text: info[index].endTime)
+                                        ])),
+                                    SizedBox(width: 25),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                      TextSpan(text: info[index].endTime)
-                                    ])),
-                                SizedBox(width: 25),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        info[index].title != ""
-                                            ? info[index].title
-                                            : "(No title)",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                          Text(
+                                            info[index].title != ""
+                                                ? info[index].title
+                                                : "(No title)",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            info[index].description,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                TextStyle(color: Colors.grey),
+                                          )
+                                        ],
                                       ),
-                                      Text(
-                                        info[index].description,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Colors.grey),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ))
+                                    ),
+                                  ],
+                                )),
+                          )
                         : Center(
                             child: Container(
                               child: Text('NO EVENT'),
